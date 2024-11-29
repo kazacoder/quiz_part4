@@ -45,6 +45,17 @@ a {
     background: #32098a;
 }
 
+.button-transparent {
+    background: transparent;
+    color: #6933DC;
+    border: 1px solid #6933DC;
+}
+
+.button-transparent:hover {
+    background: #6933DC;
+    color: white;
+}
+
 .footer {
     text-align: center;
     padding: 40px 0 ;
