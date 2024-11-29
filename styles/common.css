@@ -53,3 +53,13 @@ a {
     line-height: 16px;
     color: #DCDCF3;
 }
+
+.common-title {
+    font-family: MuseoSansCyrlBold, sans-serif;
+    font-size: 48px;
+    line-height: 58px;
+}
+
+.common-title span {
+    color: #6933DC;
+}
