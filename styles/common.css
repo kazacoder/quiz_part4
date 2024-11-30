@@ -74,3 +74,13 @@ a {
 .common-title span {
     color: #6933DC;
 }
+
+.big-title {
+    font-family: MuseoSansCyrlBold, sans-serif;
+    font-size: 54px;
+    line-height: 65px;
+}
+
+.big-title span {
+    color: #6933DC;
+}
