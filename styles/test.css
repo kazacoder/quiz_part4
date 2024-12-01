@@ -120,26 +120,7 @@
 }
 
 .pass-question {
-    display: flex;
-    justify-content: flex-end;
     margin-top: 10px;
-}
-
-.pass-question a {
-    font-size: 17px;
-    line-height: 20px;
-    color: #6933DC;
-    text-decoration: none;
-    display: flex;
-    align-items: center;
-}
-
-.pass-question a:hover {
-    text-decoration: underline;
-}
-
-.pass-question a img {
-    margin-left: 13px;
 }
 
 input[type='radio'] {

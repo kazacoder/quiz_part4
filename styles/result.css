@@ -13,7 +13,7 @@
 
 .result-image {
     position: absolute;
-    top: 225px;
+    top: 85px;
     z-index: -1;
 }
 
@@ -37,4 +37,9 @@
     display: flex;
     align-items: center;
     justify-content: center;
+}
+
+.show-right-answers {
+    align-self: flex-end;
+    margin-top: 80px;
 }

@@ -100,3 +100,25 @@ a.button {
 .big-title span {
     color: #6933DC;
 }
+
+.bottom-right-link {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.bottom-right-link a {
+    font-size: 17px;
+    line-height: 20px;
+    color: #6933DC;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+}
+
+.bottom-right-link a:hover {
+    text-decoration: underline;
+}
+
+.bottom-right-link a img {
+    margin-left: 13px;
+}
