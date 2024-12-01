@@ -66,6 +66,12 @@ a.button {
     color: white;
 }
 
+.button-transparent:disabled {
+    background: transparent;
+    color: #e2dfe7;
+    border: 1px solid #e2dfe7;
+}
+
 .footer {
     text-align: center;
     padding: 40px 0 ;
