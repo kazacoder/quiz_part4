@@ -17,6 +17,9 @@
 
 .answers-question-options {
     margin-top: 40px;
+    list-style: none;
+    padding: 0;
+
 }
 
 .answers-question-option.success {

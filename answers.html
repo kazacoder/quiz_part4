@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <link rel="stylesheet" href="styles/common.css">
     <link rel="stylesheet" href="styles/answers.css">
-    <title>Решение теста</title>
+    <title>Правильные ответы</title>
 </head>
 <body>
 
@@ -28,31 +28,18 @@
             </div>
         </div>
         <div class="answers-title big-title"><span>Правильные ответы</span> к тесту</div>
-        <div class="answers-person">Тест выполнил <span id="answers-person">Роман Чернов, roman@itlogia.ru</span></div>
-        <div class="answers-questions">
+        <div class="answers-person">Тест выполнил <span id="answers-person"></span></div>
+        <div class="answers-questions" id="answers-questions">
             <div class="answer-question">
                 <div class="answer-question-title medium-title">
                     <span>Вопрос 1:</span> Тут должен быть текст вопроса?
                 </div>
-                <div class="answers-question-options">
-                    <div class="answers-question-option question-option">Вариант ответа 1</div>
-                    <div class="answers-question-option question-option success">Вариант ответа 2</div>
-                    <div class="answers-question-option question-option">Вариант ответа 3</div>
-                    <div class="answers-question-option question-option">Вариант ответа 4</div>
-                </div>
-            </div>
-            <div class="answer-question">
-                <div class="answer-question-title medium-title">
-                    <span>Вопрос 2:</span> Тут должен быть текст вопроса?
-                </div>
-                <div class="answers-question-options">
-                    <div class="answers-question-options">
-                        <div class="answers-question-option question-option">Вариант ответа 1</div>
-                        <div class="answers-question-option question-option">Вариант ответа 2</div>
-                        <div class="answers-question-option question-option wrong">Вариант ответа 3</div>
-                        <div class="answers-question-option question-option">Вариант ответа 4</div>
-                    </div>
-                </div>
+                <ul class="answers-question-options">
+                    <li class="answers-question-option question-option">Вариант ответа 1</li>
+                    <li class="answers-question-option question-option success">Вариант ответа 2</li>
+                    <li class="answers-question-option question-option wrong">Вариант ответа 3</li>
+                    <li class="answers-question-option question-option">Вариант ответа 4</li>
+                </ul>
             </div>
         </div>
         <div class="return-to-result bottom-right-link">
@@ -66,5 +53,6 @@
 </footer>
 
 <script src="scripts/common.js"></script>
+<script src="scripts/answers.js"></script>
 </body>
 </html>

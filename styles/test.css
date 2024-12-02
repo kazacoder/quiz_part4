@@ -128,3 +128,17 @@ input[type='radio']::before {
 input[type='radio']:checked::before {
     transform: scale(1);
 }
+
+.disabled a {
+    color: #e2dfe7;
+    cursor: not-allowed;
+    text-decoration: none;
+}
+
+
+.disabled a span {
+    background-image: url("../images/small-arrow-gray.png");
+}
+.disabled a:hover {
+    text-decoration: none;
+}

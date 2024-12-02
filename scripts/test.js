@@ -8,7 +8,9 @@
         nextButtonElement: null,
         prevButtonElement: null,
         passButtonElement: null,
+        passAction: null,
         userResult: [],
+        rightAnswers: [],
         init () {
             checkUserData();
 
@@ -41,7 +43,8 @@
             this.nextButtonElement = document.getElementById('next');
             this.nextButtonElement.addEventListener('click', this.move.bind(this, 'next'));
             this.passButtonElement = document.getElementById('pass');
-            this.passButtonElement.addEventListener('click', this.move.bind(this, 'pass'));
+            this.passAction = this.move.bind(this, 'pass')
+            this.passButtonElement.addEventListener('click', this.passAction);
             this.prevButtonElement = document.getElementById('prev');
             this.prevButtonElement.addEventListener('click', this.move.bind(this, 'prev'));
             document.getElementById('pre-title').innerText = this.quiz.name;
@@ -114,12 +117,15 @@
             });
             if (chosenOption && chosenOption.chosenAnswerId) {
                 this.nextButtonElement.removeAttribute('disabled');
+                this.passButtonElement.parentElement.classList.add('disabled');
+                this.passButtonElement.removeEventListener('click', this.passAction);
             } else {
                 this.nextButtonElement.setAttribute('disabled', 'disabled');
+                this.passButtonElement.parentElement.classList.remove('disabled');
+                this.passButtonElement.addEventListener('click', this.passAction);
             }
             if (this.currentQuestionIndex === this.quiz.questions.length) {
                 this.nextButtonElement.innerHTML = 'Завершить';
-                // this.nextButtonElement.removeAttribute('disabled');
             } else {
                 this.nextButtonElement.innerHTML = 'Дальше';
             }
@@ -131,6 +137,8 @@
         },
         chooseAnswer () {
             this.nextButtonElement.removeAttribute('disabled');
+            this.passButtonElement.parentElement.classList.add('disabled');
+            this.passButtonElement.removeEventListener('click', this.passAction);
         },
         move (action) {
             const activeQuestion = this.quiz.questions[this.currentQuestionIndex - 1];
@@ -187,15 +195,21 @@
             const name = url.searchParams.get('name');
             const lastName = url.searchParams.get('lastName');
             const email = url.searchParams.get('email');
-            const xhr = new XMLHttpRequest();
-            xhr.open('POST', 'https://testologia.ru/pass-quiz?id=' + id, false);
-            xhr.setRequestHeader('Content-Type', 'application/json;charset=UTF-8');
-            xhr.send(JSON.stringify({
+            const storedResult = {
                 name: name,
                 lastName: lastName,
                 email: email,
-                results: this.userResult
-            }))
+                testId: id,
+                results: this.userResult,
+                quiz: this.quiz
+            }
+
+            //getting results
+            const xhr = new XMLHttpRequest();
+            xhr.open('POST', 'https://testologia.ru/pass-quiz?id=' + id, false);
+            xhr.setRequestHeader('Content-Type', 'application/json;charset=UTF-8');
+            xhr.send(JSON.stringify(storedResult))
+            sessionStorage.removeItem('storedResult')
 
             if (xhr.status === 200 && xhr.responseText) {
                 let result = null
@@ -205,11 +219,18 @@
                     location.href = 'index.html';
                 }
                 if (result) {
-                    location.href = 'result.html?score='  + result.score + '&total=' + result.total;
+                    storedResult.score = result.score;
+                    storedResult.total = result.total;
+                    location.href = 'result.html';
+                    sessionStorage.setItem('storedResult', JSON.stringify(storedResult))
                 }
             } else {
                 location.href = 'index.html';
             }
+
+
+
+
         },
     };
 

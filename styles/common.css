@@ -147,3 +147,13 @@ a.button {
 .bottom-right-link a img {
     margin-left: 13px;
 }
+
+.bottom-right-link a span {
+    margin-left: 13px;
+    background-image: url("../images/small-arrow.png");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    height: 15px;
+    width: 8px;
+}
