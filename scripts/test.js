@@ -86,7 +86,7 @@
             const chosenOption = this.userResult.find(item => item.questionId === activeQuestion.id);
             activeQuestion.answers.forEach((answer) => {
                 const optionElement  = document.createElement('div');
-                optionElement.className = 'test-question-option';
+                optionElement.className = 'test-question-option question-option';
 
                 const inputId = `answer-${answer.id}`
                 const inputElement  = document.createElement('input');

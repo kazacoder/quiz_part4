@@ -3,11 +3,6 @@
     padding-bottom: 50px;
 }
 
-.test-pre-title {
-    font-size: 20px;
-    line-height: 24px;
-    color: #DCDCF3;
-}
 
 .test-progress-bar {
     margin-top: 60px;
@@ -62,28 +57,11 @@
 
 }
 
-.test-question-title {
-    font-family: MuseoSansCyrlBold, sans-serif;
-    font-size: 36px;
-    line-height: 43px;
-
-}
-
-.test-question-title span {
-    color: #6933DC;
-}
-
 .test-question-options {
     margin-top: 58px;
     min-height: 344px;
 }
 
-.test-question-option {
-    font-size: 20px;
-    line-height: 24px;
-    margin-bottom: 20px;
-    display: flex;
-}
 
 .test-question-option label {
     cursor: pointer;
