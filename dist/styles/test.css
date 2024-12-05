@@ -86,7 +86,7 @@
 }
 
 .test-time-clock {
-    background-image: url("images/time.png");
+    background-image: url("../images/time.png");
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center;
@@ -137,7 +137,7 @@ input[type='radio']:checked::before {
 
 
 .disabled a span {
-    background-image: url("images/small-arrow-gray.png");
+    background-image: url("../images/small-arrow-gray.png");
 }
 .disabled a:hover {
     text-decoration: none;

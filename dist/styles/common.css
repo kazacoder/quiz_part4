@@ -150,7 +150,7 @@ a.button {
 
 .bottom-right-link a span {
     margin-left: 13px;
-    background-image: url("images/small-arrow.png");
+    background-image: url("../images/small-arrow.png");
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center;
