@@ -1,0 +1,32 @@
+{
+  "name": "quiz_part3",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "http-server ./dist",
+    "build": "webpack",
+    "dev": "webpack serve --open"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kazacoder/quiz_part3.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/kazacoder/quiz_part3/issues"
+  },
+  "homepage": "https://github.com/kazacoder/quiz_part3#readme",
+  "devDependencies": {
+    "@babel/core": "^7.26.0",
+    "@babel/preset-env": "^7.26.0",
+    "babel-loader": "^9.2.1",
+    "copy-webpack-plugin": "^12.0.2",
+    "html-webpack-plugin": "^5.6.3",
+    "http-server": "^14.1.1",
+    "webpack": "^5.97.0",
+    "webpack-cli": "^5.1.4",
+    "webpack-dev-server": "^5.1.0"
+  }
+}
