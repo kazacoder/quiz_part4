@@ -1,5 +1,6 @@
 import {UrlManager} from "../utils/url-manager.js";
 import {CustomHttp} from "../services/custom-http.js";
+import config from "../../config/config.js";
 
 export class Choice {
 
@@ -13,7 +14,7 @@ export class Choice {
 
     async init() {
         try {
-            const result = await CustomHttp.request('http://localhost:3000/api/tests')
+            const result = await CustomHttp.request( config.host +'/tests')
             if (result) {
                 if (result.error) {
                     throw new Error(result.error);

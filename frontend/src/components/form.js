@@ -1,5 +1,6 @@
 import {CustomHttp} from "../services/custom-http.js";
 import {Auth} from "../services/auth.js";
+import config from "../../config/config.js";
 
 export class Form {
 
@@ -94,45 +95,45 @@ export class Form {
     async processForm() {
         if (this.validateForm()) {
 
+            const email = this.fields.find(item => item.name === 'email').element.value;
+            const password = this.fields.find(item => item.name === 'password').element.value
+
             if (this.page === 'signup') {
                 try {
 
-                    const result = await CustomHttp.request('http://localhost:3000/api/signup', 'POST', {
+                    const result = await CustomHttp.request(config.host + '/signup', 'POST', {
                         name: this.fields.find(item => item.name === 'name').element.value,
                         lastName: this.fields.find(item => item.name === 'lastName').element.value,
-                        email: this.fields.find(item => item.name === 'email').element.value,
-                        password: this.fields.find(item => item.name === 'password').element.value,
+                        email: email,
+                        password: password,
                     })
 
                     if (result) {
                         if (result.error || !result.user) {
                             throw new Error(result.message);
                         }
-
-                        location.href = '#/choice';
                     }
                 } catch (error) {
-                    console.log(error)
+                    return console.log(error)
                 }
-            } else {
-                try {
+            }
 
-                    const result = await CustomHttp.request('http://localhost:3000/api/login', 'POST', {
-                        email: this.fields.find(item => item.name === 'email').element.value,
-                        password: this.fields.find(item => item.name === 'password').element.value,
-                    })
+            try {
+                const result = await CustomHttp.request(config.host + '/login', 'POST', {
+                    email: email,
+                    password: password,
+                })
 
-                    if (result) {
-                        if (result.error || !result.accessToken || !result.refreshToken || !result.fullName || !result.userId) {
-                            throw new Error(result.message);
-                        }
-
-                        Auth.setTokens(result.accessToken, result.refreshToken);
-                        location.href = '#/choice';
+                if (result) {
+                    if (result.error || !result.accessToken || !result.refreshToken || !result.fullName || !result.userId) {
+                        throw new Error(result.message);
                     }
-                } catch (error) {
-                    console.log(error)
+
+                    Auth.setTokens(result.accessToken, result.refreshToken);
+                    location.href = '#/choice';
                 }
+            } catch (error) {
+                console.log(error)
             }
         }
     }
