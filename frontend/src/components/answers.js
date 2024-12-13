@@ -1,95 +1,79 @@
+import {Auth} from "../services/auth.js";
+import {CustomHttp} from "../services/custom-http.js";
+import config from "../../config/config.js";
+import {UrlManager} from "../utils/url-manager.js";
+
 export class Answers {
     constructor() {
-        this.person = null;
-        this.personElement = null;
-        this.rightResult = null;
+        this.routeParams = UrlManager.getQueryParams()
+
         this.quiz = null;
         this.testId = null;
-        this.answersElement = null;
-        this.userResult = null;
-        const userResultRaw = sessionStorage.getItem('storedResult');
-        if (userResultRaw) {
-            this.userResult = JSON.parse(userResultRaw);
-        } else {
-            location.href = '#/';
-        }
-        this.testId = this.userResult.testId;
-        const name = this.userResult.name;
-        const lastName = this.userResult.lastName;
-        const email = this.userResult.email;
+
         this.personElement = document.getElementById('answers-person');
         this.answersElement = document.getElementById('answers-questions');
-        if (name && lastName && email) {
-            this.person = `${name} ${lastName}, ${email}`;
-            this.personElement.innerHTML = this.person;
-        } else {
-            location.href = '#/';
-        }
-        if (this.testId) {
-            this.getQuestions();
-            this.getRightAnswers();
-            this.showAnswers.call(this)
+        this.testTitleElement = document.getElementById('test-title');
+
+        if (this.routeParams) {
+            this.getRightAnswers()
         } else {
             location.href = '#/';
         }
         document.getElementById('back').addEventListener('click', (e) => {
-            location.href = '#/result';
+            location.href = '#/result?id=' + this.routeParams.id;
         })
     }
 
-    getQuestions() {
-        const xhr = new XMLHttpRequest();
-        xhr.open("GET", "https://testologia.ru/get-quiz?id=" + this.testId, false);
-        xhr.send();
-
-        if (xhr.status === 200 && xhr.responseText) {
-            try {
-                this.quiz = JSON.parse(xhr.responseText);
-            } catch (e) {
-                location.href = '#/';
-            }
-        } else {
-            location.href = '#/';
+    async getRightAnswers() {
+        const userInfo = Auth.getUserInfo()
+        if (!userInfo) {
+            location.href = '#/'
         }
-
-    }
-
-    getRightAnswers() {
-        const xhr = new XMLHttpRequest();
-        xhr.open('GET', 'https://testologia.ru/get-quiz-right?id=' + this.testId, false);
-        xhr.send();
-
-        if (xhr.status === 200 && xhr.responseText) {
+        if (this.routeParams.id) {
             try {
-                this.rightResult = JSON.parse(xhr.responseText);
-            } catch (e) {
-                location.href = '#/';
+                const result = await CustomHttp.request(
+                    config.host + '/tests/' + this.routeParams.id + '/result/details?userId=' + userInfo.userId,
+                )
+                if (result) {
+                    if (result.error) {
+                        throw new Error(result.error);
+                    }
+                    this.quiz = result;
+                    this.showAnswers()
+                    return;
+                }
+            } catch (error) {
+                console.log(error)
             }
-        } else {
-            location.href = '#/';
         }
+        location.href = '#/';
     }
-
 
     showAnswers() {
+        this.testTitleElement.innerText = this.quiz.test.name
+
+        const userInto = Auth.getUserInfo()
+        if (userInto) {
+            this.personElement.innerText = `${userInto.fullName}, ${userInto.email}`;
+        }
+
         this.answersElement.innerHTML = '';
-        this.quiz.questions.forEach((question, qIndex) => {
+
+        this.quiz.test.questions.forEach((question, qIndex) => {
             const answerQuestionElement = document.createElement('div');
             answerQuestionElement.className = 'answer-question';
-
             const answerQuestionTitleElement = document.createElement('div');
             answerQuestionTitleElement.className = 'answer-question-title medium-title';
-            answerQuestionTitleElement.innerHTML = `<span>Вопрос ${question.id}: </span>${question.question}`;
-
-
+            answerQuestionTitleElement.innerHTML = `<span>Вопрос ${qIndex + 1}: </span>${question.question}`;
             const answersQuestionUlElement = document.createElement('ul');
             answersQuestionUlElement.className = 'answers-question-options'
-            question.answers.forEach((answer, aIndex) => {
+
+            question.answers.forEach((answer) => {
                 const answersQuestionLiElement = document.createElement('li');
                 answersQuestionLiElement.className = 'answers-question-option question-option'
-                if (this.userResult.results[qIndex]['chosenAnswerId'] === this.rightResult[qIndex] && answer.id === this.userResult.results[qIndex]['chosenAnswerId']) {
+                if (answer.correct) {
                     answersQuestionLiElement.classList.add('success');
-                } else if (this.userResult.results[qIndex]['chosenAnswerId'] && this.userResult.results[qIndex]['chosenAnswerId'] === answer.id) {
+                } else if (answer.correct === false) {
                     answersQuestionLiElement.classList.add('wrong');
                 }
                 answersQuestionLiElement.innerText = answer.answer

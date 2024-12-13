@@ -1,11 +1,13 @@
 import {UrlManager} from "../utils/url-manager.js";
 import {CustomHttp} from "../services/custom-http.js";
 import config from "../../config/config.js";
+import {Auth} from "../services/auth.js";
 
 export class Choice {
 
     constructor() {
         this.quizzes = [];
+        this.testsResults = null;
         this.routeParams = UrlManager.getQueryParams();
 
         this.init();
@@ -20,12 +22,26 @@ export class Choice {
                     throw new Error(result.error);
                 }
 
-                this.quizzes = result
-                this.processQuizzes();
+                this.quizzes = result;
             }
         } catch (error) {
-            console.log(error)
+            return console.log(error);
         }
+        const userInfo = Auth.getUserInfo();
+        if (userInfo) {
+            try {
+                const result = await CustomHttp.request( config.host +'/tests/results?userId=' + userInfo.userId );
+                if (result) {
+                    if (result.error) {
+                        throw new Error(result.error);
+                    }
+                    this.testsResults = result;
+                }
+            } catch (error) {
+                return console.log(error);
+            }
+        }
+        this.processQuizzes();
     }
 
     processQuizzes() {
@@ -47,6 +63,17 @@ export class Choice {
                 const choiceOptionArrowElement = document.createElement('div');
                 choiceOptionArrowElement.className = 'choice-option-arrow';
 
+                const result = this.testsResults.find(item => item.testId === quiz.id);
+                if (result) {
+                    const choiceOptionResultElement = document.createElement('div');
+                    choiceOptionResultElement.className = 'choice-option-result';
+                    choiceOptionResultElement.innerHTML = `
+                        <div>Результат</div>
+                        <div>${result.score}/${result.total}</div>
+                    `;
+                    choiceOptionElement.appendChild(choiceOptionResultElement);
+                }
+
                 const choiceOptionImageElement = document.createElement('img');
                 choiceOptionImageElement.setAttribute('src', 'images/arrow.png');
                 choiceOptionImageElement.setAttribute('alt', 'Стрелка');
@@ -63,8 +90,7 @@ export class Choice {
     chooseQuiz(element) {
         const dataId = element.getAttribute('data-id');
         if (dataId) {
-            location.href = '#/test?name=' + this.routeParams.name + '&lastName=' + this.routeParams.lastName +
-                '&email=' + this.routeParams.email + '&id=' + dataId;
+            location.href = '#/test?id=' + dataId;
         }
 
     }

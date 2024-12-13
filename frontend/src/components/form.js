@@ -8,6 +8,13 @@ export class Form {
         this.agreeElement = null;
         this.processElement = null;
         this.page = page;
+
+        const accessToken = localStorage.getItem(Auth.accessTokenKey);
+        if (accessToken) {
+            location.href = '#/choice';
+            return;
+        }
+
         this.fields = [
             {
                 name: "email",
@@ -130,6 +137,11 @@ export class Form {
                     }
 
                     Auth.setTokens(result.accessToken, result.refreshToken);
+                    Auth.setUserInfo({
+                        fullName: result.fullName,
+                        userId: result.userId,
+                        email: email,
+                    })
                     location.href = '#/choice';
                 }
             } catch (error) {
