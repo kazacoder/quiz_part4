@@ -1,9 +1,9 @@
-import {Form} from "./components/form.js";
-import {Choice} from "./components/choice.js";
-import {Test} from "./components/test.js";
-import {Result} from "./components/result.js";
-import {Answers} from "./components/answers.js";
-import {Auth} from "./services/auth.js";
+import {Form} from "./components/form";
+import {Choice} from "./components/choice";
+import {Test} from "./components/test";
+import {Result} from "./components/result";
+import {Answers} from "./components/answers";
+import {Auth} from "./services/auth";
 
 export class Router {
     constructor() {

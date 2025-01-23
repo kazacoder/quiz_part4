@@ -2,7 +2,7 @@
   "name": "quiz_part3",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "src/app.ts",
   "scripts": {
     "start": "http-server ./dist",
     "build": "webpack",
@@ -18,6 +18,7 @@
     "url": "https://github.com/kazacoder/quiz_part3/issues"
   },
   "homepage": "https://github.com/kazacoder/quiz_part3#readme",
+  "private": true,
   "devDependencies": {
     "@babel/core": "^7.26.0",
     "@babel/preset-env": "^7.26.0",
@@ -25,6 +26,8 @@
     "copy-webpack-plugin": "^12.0.2",
     "html-webpack-plugin": "^5.6.3",
     "http-server": "^14.1.1",
+    "ts-loader": "^9.5.2",
+    "typescript": "^5.7.3",
     "webpack": "^5.97.0",
     "webpack-cli": "^5.1.4",
     "webpack-dev-server": "^5.1.0"

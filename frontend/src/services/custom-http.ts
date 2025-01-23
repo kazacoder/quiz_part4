@@ -1,4 +1,4 @@
-import {Auth} from "./auth.js";
+import {Auth} from "./auth";
 
 export class CustomHttp {
     static async request (url, method = 'GET', body = null) {
