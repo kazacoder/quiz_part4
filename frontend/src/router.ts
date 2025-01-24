@@ -94,10 +94,13 @@ export class Router {
         const urlRoute: string = window.location.hash.split('?')[0]
 
         if (urlRoute === '#/logout') {
-            await Auth.logout()
-            window.location.href = '#/';
+            const result: boolean = await Auth.logout()
+            if (result) {
+                window.location.href = '#/';
+                return;
+            } else {
 
-            return;
+            }
         }
 
         const newRoute: RouteType | undefined = this.routes.find(item => {
